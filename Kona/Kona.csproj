@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="icon_search.png" />
+    <None Remove="icon_tray.ico" />
+    <None Remove="test_icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="icon_search.png" />
+    <Resource Include="icon_tray.ico" />
+    <Resource Include="test_icon.ico" />
+  </ItemGroup>
+
+</Project>
