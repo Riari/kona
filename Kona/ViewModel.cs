@@ -15,11 +15,7 @@ namespace Kona
                 return new DelegateCommand
                 {
                     CanExecuteFunc = () => Application.Current.MainWindow == null,
-                    CommandAction = () =>
-                    {
-                        Application.Current.MainWindow = new MainWindow();
-                        Application.Current.MainWindow.Show();
-                    }
+                    CommandAction = () => Application.Current.MainWindow.Show()
                 };
             }
         }
@@ -33,8 +29,8 @@ namespace Kona
             {
                 return new DelegateCommand
                 {
-                    CommandAction = () => Application.Current.MainWindow.Hide(),
-                    CanExecuteFunc = () => Application.Current.MainWindow != null
+                    CanExecuteFunc = () => Application.Current.MainWindow != null,
+                    CommandAction = () => Application.Current.MainWindow.Hide()
                 };
             }
         }

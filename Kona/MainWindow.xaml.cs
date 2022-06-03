@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Kona.Interop;
 
 namespace Kona
 {
@@ -9,39 +11,53 @@ namespace Kona
     /// </summary>
     public partial class MainWindow : Window
     {
-        Grid outerContainer;
-        TextBox input;
+        private const int ExpandedHeight = 600;
 
         public MainWindow()
         {
             InitializeComponent();
-            outerContainer = (Grid)this.FindName("OuterContainer");
-            input = (TextBox)this.FindName("Input");
-            outerContainer.Visibility = Visibility.Hidden;
 
-            CommandBinding toggleCommandBinding = new CommandBinding(
-                Commands.Toggle, ExecutedToggleCommand, CanExecuteToggleCommand);
+            Input.Clear();
+            Input.Focus();
 
-            this.CommandBindings.Add(toggleCommandBinding);
+            KeyBinding HideWindowKeyBinding = new KeyBinding(
+                ((ViewModel)this.DataContext).HideWindowCommand,
+                Key.Escape,
+                ModifierKeys.None);
+
+            InputBindings.Add(HideWindowKeyBinding);
+
+            WindowBlur.SetIsEnabled(this, true);
         }
 
-        private void CanExecuteToggleCommand(object sender, CanExecuteRoutedEventArgs e)
+        private void OnInputChanged(object sender, TextChangedEventArgs args)
         {
-            e.CanExecute = true;
-        }
-
-        private void ExecutedToggleCommand(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (outerContainer.Visibility == Visibility.Hidden)
+            if (Input.Text.Length > 0)
             {
-                outerContainer.Visibility = Visibility.Visible;
-                input.Focus();
+                ResultsGrid.Visibility = Visibility.Visible;
+                Height = ExpandedHeight;
+                MainGrid.Height = ExpandedHeight;
+                MainBorder.Height = ExpandedHeight;
             }
             else
             {
-                outerContainer.Visibility = Visibility.Hidden;
-                input.Clear();
+                ResultsGrid.Visibility = Visibility.Hidden;
+                Height = Input.Height;
+                MainGrid.Height = Input.Height;
+                MainBorder.Height = Input.Height;
             }
+        }
+
+        private void OnActivated(object? sender, EventArgs args)
+        {
+            Focus();
+            Input.Focus();
+            Top = SystemParameters.PrimaryScreenHeight / 3;
+        }
+
+        private void OnDeactivated(object? sender, EventArgs args)
+        {
+            Input.Clear();
         }
     }
 }

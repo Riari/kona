@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
@@ -20,7 +21,6 @@
   <ItemGroup>
     <Resource Include="icon_search.png" />
     <Resource Include="icon_tray.ico" />
-    <Resource Include="test_icon.ico" />
   </ItemGroup>
 
 </Project>

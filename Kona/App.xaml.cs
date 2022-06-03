@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using Hardcodet.Wpf.TaskbarNotification;
 
 namespace Kona
@@ -15,6 +16,28 @@ namespace Kona
             base.OnStartup(e);
 
             notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
+
+            MainWindow = new MainWindow();
+            MainWindow.Hide();
+
+            GlobalHotKeys.Register("Alt + Space", () => ToggleMainWindow());
+        }
+
+        void OnDeactivated(object sender, EventArgs e)
+        {
+            MainWindow.Hide();
+        }
+
+        private void ToggleMainWindow()
+        {
+            if (MainWindow.Visibility == Visibility.Visible)
+            {
+                MainWindow.Hide();
+            }
+            else
+            {
+                MainWindow.Show();
+            }
         }
 
         protected override void OnExit(ExitEventArgs e)
